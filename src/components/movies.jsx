@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { getMovies } from "../services/fakeMovieService";
 import {getGenres} from "../services/fakeGenerService";
-import Likes from './common/likes';
 import Pagination from './common/pagination';
 import ListGroup from './common/listGroup';
+import MoviesTable from './moviesTable';
 import { paginate } from './utils/paginate';
 
 class Movies extends Component {
@@ -65,44 +65,7 @@ class Movies extends Component {
             </div>
             <div className="col">
               <p>Showing {filteredMovies.length} movies in the database</p>
-              <table className="table">
-                <thead>
-                  <tr>
-                    <th>Title</th>
-                    <th>Genre</th>
-                    <th>Stock</th>
-                    <th>Rate</th>
-                    <th>Like</th>
-                    <th />
-                  </tr>
-                </thead>
-                <tbody>
-                  {movies.map((ele) => (
-                    <tr key={ele._id}>
-                      <td>{ele.title}</td>
-                      <td>{ele.genre.name}</td>
-                      <td>{ele.numberInStock}</td>
-                      <td>{ele.dailyRentalRate}</td>
-                      <td>
-                        <Likes
-                          onLike={() => {
-                            this.handleLike(ele);
-                          }}
-                          movie={ele}
-                        />
-                      </td>
-                      <td>
-                        <button
-                          className="btn btn-danger btn-sm"
-                          onClick={() => this.handleDelete(ele._id)}
-                        >
-                          Delete
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+              <MoviesTable movies = {movies} onLike = {this.handleLike} onDelete = {this.handleDelete} />
               <Pagination
                 itemCounts={filteredMovies.length}
                 pageSize={pageSize}
